@@ -148,23 +148,7 @@ public class DefaultThreadContextMap implements ThreadContextMap, ReadOnlyString
     }
 
     /**
-     * Returns a mutable copy of the current thread context map.
-     * <p>
-     * This method has been optimized to avoid performance issues with the HashMap(Map) constructor
-     * that suffers from megamorphic call overhead (see JDK-8368292 and GitHub issue #3935).
-     * The optimization provides 30-50% performance improvement for non-empty maps by using
-     * manual iteration instead of the HashMap constructor.
-     * </p>
-     * <p>
-     * Benchmark results show significant improvements:
-     * <ul>
-     * <li>Map size 5: 37% faster (90.9ns → 57.5ns)</li>
-     * <li>Map size 75: 47% faster (1248ns → 667ns)</li>
-     * <li>Map size 1000: 39% faster (18625ns → 11452ns)</li>
-     * </ul>
-     * </p>
-     *
-     * @return a mutable copy of the current thread context map, never {@code null}
+     * {@return a mutable copy of the current thread context map}
      */
     @Override
     public Map<String, String> getCopy() {
@@ -189,7 +173,8 @@ public class DefaultThreadContextMap implements ThreadContextMap, ReadOnlyString
         // The HashMap(Map) constructor requires (3 + 4n) virtual method calls that become
         // megamorphic when used with different map types, leading to 24-136% performance
         // degradation. Manual iteration creates monomorphic call sites that JIT can optimize.
-        for (final Map.Entry<String, String> entry : map.entrySet()) {
+        // See https://bugs.openjdk.org/browse/JDK-8368292
+                for (final Map.Entry<String, String> entry : map.entrySet()) {
             copy.put(entry.getKey(), entry.getValue());
         }
 

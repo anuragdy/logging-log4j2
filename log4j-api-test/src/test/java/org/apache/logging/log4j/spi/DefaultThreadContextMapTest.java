@@ -17,6 +17,7 @@
 package org.apache.logging.log4j.spi;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -133,9 +134,6 @@ class DefaultThreadContextMapTest extends ThreadContextMapSuite {
         threadLocalInheritableIfConfigured(createInheritableThreadContextMap());
     }
 
-    /**
-     * Test getCopy() with empty map
-     */
     @Test
     void testGetCopyWithEmptyMap() {
         final DefaultThreadContextMap contextMap = new DefaultThreadContextMap();
@@ -157,9 +155,6 @@ class DefaultThreadContextMapTest extends ThreadContextMapSuite {
         assertTrue(contextMap.isEmpty());
     }
 
-    /**
-     * Test getCopy() with single-element map
-     */
     @Test
     void testGetCopyWithSingleElement() {
         final DefaultThreadContextMap contextMap = new DefaultThreadContextMap();
@@ -185,9 +180,6 @@ class DefaultThreadContextMapTest extends ThreadContextMapSuite {
         assertFalse(contextMap.containsKey("key2"));
     }
 
-    /**
-     * Test getCopy() with multiple elements
-     */
     @Test
     void testGetCopyWithMultipleElements() {
         final DefaultThreadContextMap contextMap = new DefaultThreadContextMap();
@@ -210,11 +202,6 @@ class DefaultThreadContextMapTest extends ThreadContextMapSuite {
         assertThat(copy).isInstanceOf(HashMap.class);
         assertEquals(5, copy.size());
 
-        for (Map.Entry<String, String> entry : testData.entrySet()) {
-            assertTrue(copy.containsKey(entry.getKey()));
-            assertEquals(entry.getValue(), copy.get(entry.getKey()));
-        }
-
         // Verify all entries match
         assertEquals(testData, copy);
 
@@ -223,9 +210,6 @@ class DefaultThreadContextMapTest extends ThreadContextMapSuite {
         assertEquals(5, contextMap.size());
     }
 
-    /**
-     * Test getCopy() returns proper HashMap type
-     */
     @Test
     void testGetCopyReturnsHashMap() {
         final DefaultThreadContextMap contextMap = new DefaultThreadContextMap();
@@ -240,9 +224,6 @@ class DefaultThreadContextMapTest extends ThreadContextMapSuite {
         assertThat(copy).isInstanceOf(HashMap.class);
     }
 
-    /**
-     * Test getCopy() independence from original map
-     */
     @Test
     void testGetCopyIndependence() {
         final DefaultThreadContextMap contextMap = new DefaultThreadContextMap();
